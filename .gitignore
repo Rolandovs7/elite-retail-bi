@@ -6,3 +6,6 @@ __pycache__/
 
 # Datos originales: no subir a GitHub
 data/raw/
+
+# Script de migración local
+migrar_resumenes.py

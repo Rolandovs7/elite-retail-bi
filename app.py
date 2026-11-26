@@ -26,15 +26,18 @@ def cargar_datos():
         db_config = None
 
     if db_config:
-        # Conexión en la nube: credenciales desde los secretos de Streamlit
-        conexion = psycopg2.connect(
-            dbname=db_config["dbname"],
-            user=db_config["user"],
-            password=db_config["password"],
-            host=db_config["host"],
-            port=db_config.get("port", 5432),
-            sslmode=db_config.get("sslmode", "require")
-        )
+        # Neon: cadena de conexión guardada en los secretos de Streamlit
+        if "url" in db_config:
+            conexion = psycopg2.connect(db_config["url"])
+        else:
+            conexion = psycopg2.connect(
+                dbname=db_config["dbname"],
+                user=db_config["user"],
+                password=db_config["password"],
+                host=db_config["host"],
+                port=db_config.get("port", 5432),
+                sslmode=db_config.get("sslmode", "require")
+            )
     else:
         # Conexión local en Linux Mint
         conexion = psycopg2.connect(
